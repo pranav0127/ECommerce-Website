@@ -7,16 +7,30 @@ using System.Web.UI.WebControls;
 
 public partial class Men : System.Web.UI.Page
 {
+    public static string CS = ConfigurationManager.ConnectionStrings["StepUp"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            BindProductRepeater();
+            BindMenProductRepeater();
         }
     }
 
-    public void BindProductRepeater()
+    public void BindMenProductRepeater()
     {
-
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            using (SqlCommand cmd = new SqlCommand("procBindMenProducts", con))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    rptrMenProducts.DataSource = dt;
+                    rptrMenProducts.DataBind();
+                }
+            }
+        }
     }
 }
