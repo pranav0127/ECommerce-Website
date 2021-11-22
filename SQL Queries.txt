@@ -37,8 +37,8 @@ order by A.PID desc
 Return 0
 
 ---------------------------------------------
-create table tblForgotPass(
-id int primary key,
+create table ForgotPass(
+id varchar(100) primary key,
 uid int null,
 RequestDateTime datetime null,
 constraint [FK_ForgotPass_tblUsers] foreign key ([uid]) references [tblUsers] ([Uid])
